@@ -9,6 +9,7 @@ description = "Offline-first auditor for MCP client configuration files"
 readme = "README.md"
 requires-python = ">=3.11"
 license = { file = "LICENSE" }
+authors = [{ name = "Robert Vind-Gardoș" }]
 keywords = ["mcp", "security", "configuration", "audit"]
 classifiers = [
   "Development Status :: 3 - Alpha",
@@ -33,6 +34,11 @@ dev = [
   "pytest-cov>=6,<8",
   "ruff>=0.11,<1",
 ]
+
+[project.urls]
+Repository = "https://github.com/robyroro/mcp-latchpoint"
+Issues = "https://github.com/robyroro/mcp-latchpoint/issues"
+Changelog = "https://github.com/robyroro/mcp-latchpoint/blob/main/CHANGELOG.md"
 
 [project.scripts]
 mcp-latchpoint = "mcp_latchpoint.cli:main"
