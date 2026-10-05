@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "reviewed-files": {
+      "command": "npx",
+      "args": [
+        "--yes",
+        "@modelcontextprotocol/server-filesystem@1.2.3",
+        "/srv/mcp/shared-documents"
+      ],
+      "env": {
+        "SERVICE_TOKEN": "${SERVICE_TOKEN}"
+      }
+    },
+    "internal-api": {
+      "type": "http",
+      "url": "https://mcp.example.com/api"
+    }
+  }
+}

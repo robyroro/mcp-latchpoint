@@ -1,0 +1,7 @@
+[mcp_servers.reviewed_local]
+command = "uvx"
+args = ["example-mcp-server==1.4.2", "--workspace", "/srv/mcp/project"]
+
+[mcp_servers.reviewed_remote]
+url = "https://mcp.example.com/api"
+bearer_token_env_var = "EXAMPLE_MCP_TOKEN"

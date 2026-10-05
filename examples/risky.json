@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "shell-launch": {
+      "command": "sh",
+      "args": ["-c", "npx @example/mcp-server --root /"],
+      "env": {
+        "API_TOKEN": "synthetic-example-value"
+      }
+    },
+    "remote": {
+      "type": "http",
+      "url": "http://mcp.example.com/connect?api_key=synthetic-example-value",
+      "headers": {
+        "Authorization": "Bearer synthetic-example-value"
+      }
+    }
+  }
+}
