@@ -113,6 +113,22 @@ Example client entry:
 
 The server returns findings and scan metadata, never raw configuration content. Stdio is the only server transport exposed by the entry point, and stdout is reserved for MCP protocol messages.
 
+### Glama build
+
+The [Glama listing](https://glama.ai/mcp/servers/robyroro/mcp-latchpoint) builds a container from the repository. In its Dockerfile configuration, use Python 3.13, these build steps and command arguments:
+
+```json
+["uv sync --no-dev"]
+```
+
+```json
+["mcp-proxy", "--", "/app/.venv/bin/mcp-latchpoint-server", "--root", "/app/examples"]
+```
+
+The root is an existing directory with synthetic sample configurations. It lets Glama start and inspect the tools without giving the server access to a user's files. The command uses the executable inside the virtual environment created by `uv sync`. For this demo, the environment-variable schema can be `{"type":"object","properties":{}}` and placeholder parameters can be `{}`.
+
+To scan your own configurations, run the server locally with `--root` pointing to a directory you explicitly trust. Glama's demo root is only for the sample files in `examples/`.
+
 ## Safety and limitations
 
 The scanner never executes commands, installs packages, resolves referenced environment variables, or connects to endpoints. It does not follow configuration includes or inspect an MCP server's code or runtime behavior. Argument-based rules are intentionally limited to recognizable patterns, so custom flags can be missed. A clean report is not proof that a server is safe.
