@@ -19,7 +19,7 @@ def _parser() -> argparse.ArgumentParser:
         prog="mcp-latchpoint",
         description="Audit MCP client configurations without executing them.",
     )
-    parser.add_argument("--version", action="version", version="%(prog)s 0.1.0")
+    parser.add_argument("--version", action="version", version="%(prog)s 0.1.1")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     scan = subparsers.add_parser("scan", help="scan explicit files or known config paths")
@@ -52,6 +52,10 @@ def _parser() -> argparse.ArgumentParser:
     explain = subparsers.add_parser("explain", help="show one rule in detail")
     explain.add_argument("rule_id", help="stable rule ID, for example MCP001")
     explain.add_argument("--format", choices=("text", "json"), default="text")
+
+    serve = subparsers.add_parser("serve", help="run the read-only MCP stdio server")
+    serve.add_argument("--root", required=True, type=Path, help="only scan inside this directory")
+    serve.add_argument("--max-bytes", type=int, default=DEFAULT_MAX_BYTES)
     return parser
 
 
@@ -80,6 +84,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         else:
             sys.stdout.write(rule_text(rule))
         return 0
+
+    if args.command == "serve":
+        from mcp_latchpoint.mcp_server import main as server_main
+
+        return server_main(["--root", str(args.root), "--max-bytes", str(args.max_bytes)])
 
     if not args.paths and not args.discover:
         parser.error("scan requires at least one path or --discover")

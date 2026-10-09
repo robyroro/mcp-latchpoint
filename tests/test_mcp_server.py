@@ -91,3 +91,22 @@ async def test_stdio_entrypoint_has_a_clean_protocol_stream(tmp_path: Path) -> N
     assert scanned.is_error is False
     assert scanned.structured_content is not None
     assert scanned.structured_content["summary"]["files_scanned"] == 1
+
+
+@pytest.mark.anyio
+async def test_registry_cli_serve_entrypoint(tmp_path: Path) -> None:
+    config = tmp_path / "mcp.json"
+    config.write_text('{"mcpServers":{}}', encoding="utf-8")
+    parameters = StdioServerParameters(
+        command=sys.executable,
+        args=["-m", "mcp_latchpoint.cli", "serve", "--root", str(tmp_path)],
+    )
+
+    async with Client(parameters) as client:
+        listed = await client.list_tools()
+        scanned = await client.call_tool("scan", {"path": "mcp.json"})
+
+    assert {tool.name for tool in listed.tools} == {"list_rules", "scan"}
+    assert scanned.is_error is False
+    assert scanned.structured_content is not None
+    assert scanned.structured_content["summary"]["files_scanned"] == 1

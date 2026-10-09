@@ -136,7 +136,7 @@ def report_sarif(report: ScanReport) -> str:
                 "tool": {
                     "driver": {
                         "name": "mcp-latchpoint",
-                        "semanticVersion": "0.1.0",
+                        "semanticVersion": "0.1.1",
                         "rules": rules,
                     }
                 },

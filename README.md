@@ -1,5 +1,7 @@
 # mcp-latchpoint
 
+<!-- mcp-name: io.github.robyroro/mcp-latchpoint -->
+
 `mcp-latchpoint` audits MCP client configuration files without running the configured servers. It works offline, reads only local files you select, and produces text, JSON, or SARIF results.
 
 This is an early defensive tool. Review findings in context before changing a working configuration.
@@ -21,6 +23,12 @@ Every finding has a stable rule ID, severity, location, remediation, redacted ev
 ## Install
 
 Python 3.11 or newer is required.
+
+```console
+python -m pip install mcp-latchpoint
+```
+
+To install from a local checkout:
 
 ```console
 python -m venv .venv
@@ -96,6 +104,7 @@ The stdio server exposes two tools: `list_rules` and `scan`. It requires an allo
 
 ```console
 mcp-latchpoint-server --root /absolute/path/to/reviewed-configs
+mcp-latchpoint serve --root /absolute/path/to/reviewed-configs
 ```
 
 Example client entry:
@@ -112,6 +121,8 @@ Example client entry:
 ```
 
 The server returns findings and scan metadata, never raw configuration content. Stdio is the only server transport exposed by the entry point, and stdout is reserved for MCP protocol messages.
+
+The `serve` command is also the entry point advertised in the MCP Registry. Set `--root` to a directory you explicitly trust before connecting a client.
 
 ### Glama build
 
